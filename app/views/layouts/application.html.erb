@@ -13,17 +13,20 @@
 
     <!-- CSS Libs -->
     <%= stylesheet_link_tag "style" %>
+    <%= stylesheet_link_tag "datatables.min.css" %>
 
     <!-- Custom CSS -->
     <%= stylesheet_link_tag "custom" %>
 
     <!-- Jquery + Custom JS -->
+    <%= javascript_include_tag "jquery-3.1.1.min.js" %>
     <%= javascript_include_tag "custom" %>
     <%= javascript_include_tag "inspinia" %>
-    <%= javascript_include_tag "jquery-3.1.1.min.js" %>
+    <%= javascript_include_tag "Chart.min" %>
+    <%= javascript_include_tag "datatables.min.js" %>
 </head>
 <body>
-	<%= render "layouts/sidebar" %>
+	<%= render "layouts/sidebar" %><br>
 	<%= yield %>
 </body>
 </html>

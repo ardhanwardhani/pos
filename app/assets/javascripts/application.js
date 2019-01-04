@@ -16,4 +16,5 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require inspinia
+//= require datatables.min
 // require_tree .
