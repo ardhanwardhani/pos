@@ -3,7 +3,6 @@ class CreateBussinesses < ActiveRecord::Migration[5.1]
     create_table :bussinesses do |t|
       t.integer :user_id
       t.string :name
-      t.string :email
       t.string :telephone
       t.string :province
       t.string :city

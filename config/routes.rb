@@ -4,5 +4,11 @@ Rails.application.routes.draw do
 
   root "outlets#index"
 
+  resources :homes, only: [:index]
   resources :outlets
+  resources :bussinesses, only: [:edit, :update]
+  resources :members
+  resources :products
+  resources :categories
+  resources :accounts, only: [:index]
 end

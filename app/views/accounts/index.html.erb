@@ -1,0 +1,104 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox">
+				<div class="ibox-title">
+					<div class="ibox-tools">
+              <a class="collapse-link">
+                  <i class="fa fa-chevron-up"></i>
+              </a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <i class="fa fa-wrench"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-user">
+                  <li><a href="#" class="dropdown-item">Config option 1</a></li>
+                  <li><a href="#" class="dropdown-item">Config option 2</a></li>
+              </ul>
+              <a class="close-link">
+                  <i class="fa fa-times"></i>
+              </a>
+          </div>
+					<h3>Account Information</h3>
+				</div>
+				<div class="ibox-content">
+					<table>
+						<tr>
+							<td>User Name</td>
+							<td> :  <%= @user.name %></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td> :  <%= @user.email %></td>
+						</tr>
+						<tr>
+							<td>Telephone</td>
+							<td> :  <%= @user.telephone %></td>
+						</tr>
+						<tr>
+							<td>City</td>
+							<td> :  <%= @user.city %></td>
+						</tr>
+						<tr>
+							<td>Province</td>
+							<td> :  <%= @user.province %></td>
+						</tr>
+					</table><br>
+					<div class="action">
+						<%= link_to 'Change Information', edit_user_registration_path, class: 'btn btn-warning btn-sm' %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox">
+				<div class="ibox-title">
+					<div class="ibox-tools">
+              <a class="collapse-link">
+                  <i class="fa fa-chevron-up"></i>
+              </a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <i class="fa fa-wrench"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-user">
+                  <li><a href="#" class="dropdown-item">Config option 1</a></li>
+                  <li><a href="#" class="dropdown-item">Config option 2</a></li>
+              </ul>
+              <a class="close-link">
+                  <i class="fa fa-times"></i>
+              </a>
+          </div>
+					<h3>Bussiness Information</h3>
+				</div>
+				<div class="ibox-content">
+					<table>
+						<tr>
+							<td>bussiness Name</td>
+							<td> :  <%= @bussiness.name %></td>
+						</tr>
+						<tr>
+							<td>Email</td>
+							<td> :  <%=  @bussiness.email %></td>
+						</tr>
+						<tr>
+							<td>Telephone</td>
+							<td> :  <%= @bussiness.telephone %></td>
+						</tr>
+						<tr>
+							<td>Address</td>
+							<td> :  <%= @bussiness.city %></td>
+						</tr>
+						<tr>
+							<td>Province</td>
+							<td> :  <%= @bussiness.province %></td>
+						</tr>
+					</table><br>
+					<div class="action">
+						<%= link_to 'Change Information', edit_bussiness_path(@user), class: 'btn btn-warning btn-sm' %>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

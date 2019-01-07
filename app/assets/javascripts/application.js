@@ -13,8 +13,8 @@
 //= require rails-ujs
 // require turbolinks
 //= require jquery3
+//= require datatables.min
 //= require popper
 //= require bootstrap-sprockets
 //= require inspinia
-//= require datatables.min
 // require_tree .

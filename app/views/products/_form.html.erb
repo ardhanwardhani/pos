@@ -1,0 +1,25 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox">
+        <div class="ibox-title">
+          <h2>New Product</h2>
+        </div>
+        <div class="ibox-content">
+          <%= simple_form_for @product do |f| %>
+            <%= f.input :name %>
+            <%= f.input :price %>
+            <%= f.input :product_number %>
+            <%= f.input :barcode %>
+            <%= f.input :type_unit %>
+            <%= f.input :status, as: :select, collection: [['Dijual', '0'], ['Tidak dijual', '1']] %>
+            <%= f.input :description %>
+            Category<br>
+            <%= f.select("category_id", options_from_collection_for_select(Category.all, "id", "name", params[:id].to_i)) %>
+            <%= f.button :submit, class: 'btn btn-primary btn-block'%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
