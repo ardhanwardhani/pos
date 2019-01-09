@@ -1,4 +1,5 @@
 class CategoriesController < ApplicationController
+
 	def index
 		@categories = Category.all
 	end
@@ -38,6 +39,7 @@ class CategoriesController < ApplicationController
 		@category = Category.find(params[:id])
 		if @category.destroy
 			redirect_to categories_path
+		end
 	end
 
 	private
@@ -45,4 +47,5 @@ class CategoriesController < ApplicationController
 	def resource_params
 		params.require(:category).permit(:id, :name)
 	end
+
 end

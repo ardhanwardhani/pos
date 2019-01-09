@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   resources :members
   resources :products
   resources :categories
+  resources :instocks
+  resources :outstocks
   resources :accounts, only: [:index]
 end

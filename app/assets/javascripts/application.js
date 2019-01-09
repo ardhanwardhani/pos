@@ -13,8 +13,10 @@
 //= require rails-ujs
 // require turbolinks
 //= require jquery3
-//= require datatables.min
-//= require popper
 //= require bootstrap-sprockets
+//= require popper
+//= require jquery.metisMenu
+//= require datatables.min
 //= require inspinia
+//= require nested_form_fields
 // require_tree .

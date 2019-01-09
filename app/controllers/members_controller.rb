@@ -6,6 +6,7 @@ class MembersController < ApplicationController
 
 	def show
 		@member = Member.find(params[:id])
+		@transaction = Transaction.where(member_id: @member.id)
 	end
 
 	def new

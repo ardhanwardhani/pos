@@ -8,7 +8,23 @@ class Product < ApplicationRecord
 
 	belongs_to :category, :optional => true
 
+	serialize :group_varians, Hash
+	after_create :product_hash
+
 	def fill_user_id(current_user)
 		self.user_id = current_user.id
+	end
+
+	def product_hash
+		hsh = self.group_varians
+  	attrs   = hsh.values
+  	keys    = hsh.keys
+  	product = attrs[0].product(*attrs[1..-1])
+  	varians = product.map{ |p| Hash[keys.zip p] }
+
+  	varians.each do |v|
+  		name_varian = v.values.join(" ")
+  		@varian = Varian.create(product_id: self.id, name: name_varian, user_id: self.user_id)
+  	end
 	end
 end

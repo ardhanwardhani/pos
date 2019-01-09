@@ -28,7 +28,7 @@
                                 <tr>
                                     <th>ID Member</th>
                                     <th>Name</th>
-                                    <th colspan="2">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,7 +37,6 @@
                                     <td><%= m.id_member %></td>
                                     <td><%= m.name %></td>
                                     <td><%= link_to 'Detail', member_path(m), class: 'btn btn-sm btn-info' %></td>
-                                    <td><%= link_to 'Edit', edit_member_path(m), class: 'btn btn-sm btn-warning' %></td>
                                 </tr>
                             <% end %>
                             </tbody>
@@ -45,7 +44,7 @@
                                 <tr>
                                     <th>ID Member</th>
                                     <th>Name </th>
-                                    <th colspan="2">Action</th>
+                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>

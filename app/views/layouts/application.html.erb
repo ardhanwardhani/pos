@@ -14,12 +14,14 @@
     <!-- CSS Libs -->
     <%= stylesheet_link_tag "style" %>
     <%= stylesheet_link_tag "datatables.min.css" %>
+    <%= stylesheet_link_tag "https://cdn.jsdelivr.net/npm/metismenu/dist/metisMenu.min.css" %>
 
     <!-- Custom CSS -->
     <%= stylesheet_link_tag "custom" %>
 
     <!-- Jquery + Custom JS -->
     <%= javascript_include_tag "jquery-3.1.1.min.js" %>
+    <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/metismenu" %>
     <%= javascript_include_tag "datatables.min.js" %>
     <%= javascript_include_tag "custom" %>
     <%= javascript_include_tag "inspinia" %>
@@ -27,6 +29,14 @@
 </head>
 <body>
 	<%= render "layouts/sidebar" %><br>
+    <% flash.each do |key, value| %>
+    <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
+        <strong><%= value %></strong>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <% end %>
 	<%= yield %>
 </body>
 </html>

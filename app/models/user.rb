@@ -12,6 +12,15 @@ class User < ApplicationRecord
   has_many :products
   has_many :varians
   has_one :image, :as => :imageable
+  has_many :income_stocks, :as => :authable
+  has_many :outcome_stocks, :as => :authable
+  has_many :purchase_orders, :as => :authable
+
+  validates :name, presence: true
+  validates :email, presence: true
+  validates :telephone, presence: true
+  validates :province, presence: true
+  validates :city, presence: true
 
   after_create :bussiness
 

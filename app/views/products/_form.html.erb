@@ -14,8 +14,17 @@
             <%= f.input :type_unit %>
             <%= f.input :status, as: :select, collection: [['Dijual', '0'], ['Tidak dijual', '1']] %>
             <%= f.input :description %>
-            Category<br>
-            <%= f.select("category_id", options_from_collection_for_select(Category.all, "id", "name", params[:id].to_i)) %>
+            <%= f.input :category_id do %>
+              <%= f.select :category_id, Category.all.map { |c| [c.name, c.id, { class: c.id }] }, include_blank: 'Choose a Category', class: 'form-control' %>
+            <% end %>
+            <!--
+            <%#= f.select("category_id", options_from_collection_for_select(Category.all, "id", "name", params[:id].to_i)) %>
+            -->
+            <h3>Varian</h3>
+
+            <%= f.input :group_varians, as: :hidden %>
+            <div id="variants"></div>
+            <%= link_to "add", "javascript:void(0);", class: "add-variant" %>
             <%= f.button :submit, class: 'btn btn-primary btn-block'%>
           <% end %>
         </div>
@@ -23,3 +32,43 @@
     </div>
   </div>
 </div>
+<script>
+    function updateHiddenField() {
+      $(".variant").keyup(function() {
+        data = {}
+
+        for (i = 0; i < $(".variant").length; i++) {
+          input      = $($(".variant")[i]);
+          listId     = input.data('list');
+          varians    = input.val().split(",");
+          groupInput = $(".group-list-" + listId);
+          groupName  = groupInput.val();
+          data[groupName] = varians;
+        }
+
+        value = JSON.stringify(data)
+        $("#product_group_varians").val(value);
+      })
+    }
+
+    function addVariant() {
+      $('.add-variant').click(function() {
+        list = $(".variant-list").length
+        if (list < 3) {
+          $("#variants").append(
+            "<div class='variant-list'>" +
+              "<label>Group</label><br>" +
+              "<input type='text' class='form-control group-variant group-list-" + list + "' data-list='" + list + "'><br>" +
+              "<label>Varian</label><br>" +
+              "<input type='text' class='form-control variant list-" + list + "' data-list='" + list + "'>" +
+            "</div>"
+          );
+          updateHiddenField()
+        }
+      });
+    }
+
+    $(document).ready(function() {
+      addVariant()
+    });
+</script>

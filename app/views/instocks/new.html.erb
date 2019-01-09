@@ -1,0 +1,29 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="ibox">
+        <div class="ibox-title">
+          <h2>Income Stock</h2>
+        </div>
+        <div class="ibox-content">
+          <%= simple_form_for(@income, url: instocks_path, method: :post) do |f| %>
+            <%= f.input :id_income_stock %>
+            <%= f.input :outlet_id do %>
+              <%= f.select :outlet_id, Outlet.all.map { |o| [o.name, o.id, { class: o.id }] }, include_blank: 'Choose an Outlet', class: 'form-control' %>
+            <% end %>
+            <%= f.input :date %>
+            <%= f.input :note %>
+            <%= f.nested_fields_for :income_items do |ff| %>
+              <%= ff.remove_nested_fields_link %>
+              <%= ff.text_field :amount %>
+              <%= ff.text_field :unit_price %>
+              <%= ff.text_field :total %>
+            <% end %>
+            <%= f.add_nested_fields_link :income_items %>
+            <%= f.button :submit, class: 'btn btn-primary btn-block'%>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
