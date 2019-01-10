@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190109092605) do
+ActiveRecord::Schema.define(version: 20190110074541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20190109092605) do
     t.string "authable_type"
     t.integer "authable_id"
     t.string "id_income_stock"
+    t.integer "user_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(version: 20190109092605) do
     t.string "authable_type"
     t.integer "authable_id"
     t.string "id_outcome_stock"
+    t.integer "user_id"
   end
 
   create_table "outlets", force: :cascade do |t|
@@ -174,6 +176,7 @@ ActiveRecord::Schema.define(version: 20190109092605) do
     t.datetime "updated_at", null: false
     t.string "authable_type"
     t.integer "authable_id"
+    t.integer "user_id"
   end
 
   create_table "suppliers", force: :cascade do |t|

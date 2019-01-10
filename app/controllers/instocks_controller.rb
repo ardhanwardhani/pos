@@ -1,6 +1,6 @@
 class InstocksController < ApplicationController
 	def index
-		@incomes = IncomeStock.all
+		@incomes = IncomeStock.
 	end
 
 	def show
@@ -14,6 +14,7 @@ class InstocksController < ApplicationController
 		@income = IncomeStock.new(resource_params)
 		@income.fill_authable(current_user)
 		if @income.save
+			flash[:success] = "Income Stock successfully created"
 			redirect_to instocks_path
 		else
 			render 'new'

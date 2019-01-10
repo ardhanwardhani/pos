@@ -18,35 +18,32 @@
                             <i class="fa fa-times"></i>
                         </a>
                     </div>
-                    <h2>Product</h2>
+                    <h2>Supplier</h2>
                 </div>
                 <div class="ibox-content">
-                    <%= link_to 'New Product', new_product_path, class: 'btn btn-primary' %><br><br>
+                    <%= link_to 'New Supplier', new_supplier_path, class: 'btn btn-primary' %><br><br>
                     <div class="table-responsive">
-                        <table id="product" class="table table-striped table-bordered table-hover dataTables-example">
+                        <table id="supplier" class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                    <th>Name </th>
-                                    <th>Category</th>
-                                    <th>Price</th>
+                                    <th>Name</th>
+                                    <th>Telephone</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                            <% @products.each do |p| %>
+                            <% @suppliers.each do |s| %>
                                 <tr>
-                                    <td><%= p.name %></td>
-                                    <td><%= p.category_id.blank? ? "Tidak berkategori" : p.category.name %></td>
-                                    <td><%= p.price %></td>
-                                    <td><%= link_to 'Detail', product_path(p), class: 'btn btn-sm btn-info' %></td>
+                                    <td><%= s.name %></td>
+                                    <td><%= s.telephone %></td>
+                                    <td><%= link_to 'Detail', supplier_path(s), class: 'btn btn-sm btn-info' %></td>
                                 </tr>
                             <% end %>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Name </th>
-                                    <th>Category</th>
-                                    <th>Price</th>
+                                    <th>Name</th>
+                                    <th>Telephone</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

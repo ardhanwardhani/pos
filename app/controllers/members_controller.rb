@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
 
 	def index
-		@members = Member.all
+		@members = Member.where(user_id: current_user.id)
 	end
 
 	def show
@@ -17,6 +17,7 @@ class MembersController < ApplicationController
 		@member = Member.new(resource_params)
 		@member.fill_user_id(current_user)
 		if @member.save
+			flash[:success] = "Member successfully created"
 			redirect_to members_path
 		else
 			render 'new'
@@ -30,6 +31,7 @@ class MembersController < ApplicationController
 	def update
 		@member = Member.find(params[:id])
 		if @member.update(resource_params)
+			flash[:success] = "Member has been changed"
 			redirect_to members_path
 		else
 			rende 'new'
@@ -39,6 +41,7 @@ class MembersController < ApplicationController
 	def destroy
 		@member = Member.find(params[:id])
 		if @member.destroy
+			flash[:info] = "Member has been deleted"
 			redirect_to members_path
 		end
 	end

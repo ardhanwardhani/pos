@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
 
 	def index
-		@categories = Category.all
+		@categories = Category.where(user_id: current_user.id)
 	end
 
 	def show
@@ -16,6 +16,7 @@ class CategoriesController < ApplicationController
 		@category = Category.new(resource_params)
 		@category.fill_user_id(current_user)
 		if @category.save
+			flash[:success] = "New categories added"
 			redirect_to categories_path
 		else
 			render 'new'
@@ -29,6 +30,7 @@ class CategoriesController < ApplicationController
 	def update
 		@category = Category.find(params[:id])
 		if @category.update(resource_params)
+			flash[:success] = "Category has been changed"
 			redirect_to categories_path
 		else
 			render 'new'
@@ -38,6 +40,7 @@ class CategoriesController < ApplicationController
 	def destroy
 		@category = Category.find(params[:id])
 		if @category.destroy
+			flash[:info] = "Category has been deleted"
 			redirect_to categories_path
 		end
 	end

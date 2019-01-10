@@ -13,7 +13,8 @@ class OutstocksController < ApplicationController
 	def create
 		@outcome = IncomeStock.new(resource_params)
 		@outcome.fill_authable(current_user)
-		if @income.save
+		if @outcome.save
+			flash[:success] = "Outcome Stock successfully created"
 			redirect_to outstocks_path
 		else
 			render 'new'

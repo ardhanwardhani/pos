@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 	def index
-		@products = Product.all
+		@products = Product.where(user_id: current_user.id)
 	end
 
 	def show
@@ -10,15 +10,17 @@ class ProductsController < ApplicationController
 
 	def new
 		@product = Product.new
+		@categories = Category.all
 	end
 
 	def create
 		@product = Product.new(resource_params)
 		@product.group_varians = JSON.parse(params[:product][:group_varians])
-
 		@product.fill_user_id(current_user)
+
 		if @product.save
-			redirect_to products_path
+			flash[:success] = "Product successfully created"
+			redirect_to product_path(@product)
 		else
 			render 'new'
 		end
@@ -26,11 +28,13 @@ class ProductsController < ApplicationController
 
 	def edit
 		@product = Product.find(params[:id])
+		@categories = Category.all
 	end
 
 	def update
 		@product = Product.find(params[:id])
 		if @product.update(resource_params)
+			flash[:success] = "Product has been changed"
 			redirect_to products_path
 		else
 			render 'new'
@@ -40,6 +44,7 @@ class ProductsController < ApplicationController
 	def destroy
 		@product = Product.find(params[:id])
 		if @product.destroy
+			flash[:info] = "Product has been deleted"
 			redirect_to products_path
 		end
 	end

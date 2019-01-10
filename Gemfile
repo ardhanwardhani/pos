@@ -11,6 +11,7 @@ gem 'jquery-rails'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'simple_form'
 gem 'nested_form_fields'
+gem 'aasm'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6', '>= 5.1.6.1'

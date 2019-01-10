@@ -1,7 +1,7 @@
 class OutletsController < ApplicationController
 
 	def index
-		@outlets = Outlet.all
+		@outlets = Outlet.where(user_id: current_user.id)
 	end
 
 	def show
@@ -16,7 +16,7 @@ class OutletsController < ApplicationController
 		@outlet = Outlet.new(resource_params)
 		@outlet.fill_user_id(current_user)
 		if @outlet.save
-			flash[:success] = "Outlet baru telah dibuat!"
+			flash[:success] = "New outlet successfully created"
 			redirect_to outlets_path
 		else
 			render 'new'
@@ -30,7 +30,7 @@ class OutletsController < ApplicationController
 	def update
 		@outlet = Outlet.find(params[:id])
 		if @outlet.update(resource_params)
-			flash[:success] = "Outlet telah diubah!"
+			flash[:success] = "Outlet has been changed"
 			redirect_to outlets_path
 		else
 			render 'new'
@@ -40,7 +40,7 @@ class OutletsController < ApplicationController
 	def destroy
 		@outlet = Outlet.find(params[:id])
 		if @outlet.delete
-			flash[:info] = "Outlet telah dihapus!"
+			flash[:info] = "Outlet has been deleted"
 			redirect_to outlets_path
 		end
 	end

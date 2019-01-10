@@ -1,7 +1,7 @@
 class EmployeesController < ApplicationController
 
 	def index
-		@employees = Employee.all
+		@employees = Employee.where(user_id: current_user.id)
 	end
 
 	def show
@@ -15,6 +15,7 @@ class EmployeesController < ApplicationController
 	def create
 		@employee = Employee.new(resource_params)
 		if @employee.save
+			flash[:success] = "Employee successfully added"
 			redirect_to employees_path
 		else
 			render 'new'
@@ -28,6 +29,7 @@ class EmployeesController < ApplicationController
 	def update
 		@employee = Employee.find(params[:id])
 		if @employee.update(resource_params)
+			flash[:success] = "Employee data has been changed"
 			redirect_to employees_path
 		else
 			render 'new'
@@ -37,6 +39,7 @@ class EmployeesController < ApplicationController
 	def destroy
 		@employee = Employee.find(params[:id])
 		if @employee.destroy
+			flash[:info] = "Employess data has been deleted"
 			redirect_to employees_path
 		end
 	end

@@ -24,23 +24,23 @@
 					<table>
 						<tr>
 							<td>User Name</td>
-							<td> :  <%= @user.name %></td>
+							<td> :  <%= current_user.name %></td>
 						</tr>
 						<tr>
 							<td>Email</td>
-							<td> :  <%= @user.email %></td>
+							<td> :  <%= current_user.email %></td>
 						</tr>
 						<tr>
 							<td>Telephone</td>
-							<td> :  <%= @user.telephone %></td>
+							<td> :  <%= current_user.telephone %></td>
 						</tr>
 						<tr>
 							<td>City</td>
-							<td> :  <%= @user.city %></td>
+							<td> :  <%= current_user.city %></td>
 						</tr>
 						<tr>
 							<td>Province</td>
-							<td> :  <%= @user.province %></td>
+							<td> :  <%= current_user.province %></td>
 						</tr>
 					</table><br>
 					<div class="action">
@@ -95,7 +95,7 @@
 						</tr>
 					</table><br>
 					<div class="action">
-						<%= link_to 'Change Information', edit_bussiness_path(@user), class: 'btn btn-warning btn-sm' %>
+						<%= link_to 'Change Information', edit_bussiness_path(current_user), class: 'btn btn-warning btn-sm' %>
 					</div>
 				</div>
 			</div>
