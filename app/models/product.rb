@@ -12,10 +12,20 @@ class Product < ApplicationRecord
 	belongs_to :category, :optional => true
 
 	serialize :group_varians, Hash
+	
 	after_create :product_hash
 
 	aasm :column => 'status' do
-		state 
+		state :on_sale, :initial => true
+		state :not_sold
+
+		event :sale do
+			transitions :from => :not_sold, :to => :on_sale
+		end
+
+		event :not_sale do
+			transitions :from => :on_sale, :to => :not_sold
+		end
 	end
 
 

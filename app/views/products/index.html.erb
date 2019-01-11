@@ -36,7 +36,7 @@
                             <% @products.each do |p| %>
                                 <tr>
                                     <td><%= p.name %></td>
-                                    <td><%= p.category_id.blank? ? "Tidak berkategori" : p.category.name %></td>
+                                    <td><%= p.category_id = 0 ? "Tidak berkategori" : p.category.name %></td>
                                     <td><%= p.price %></td>
                                     <td><%= link_to 'Detail', product_path(p), class: 'btn btn-sm btn-info' %></td>
                                 </tr>

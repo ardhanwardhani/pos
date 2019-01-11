@@ -44,7 +44,7 @@
 						</tr>
 						<tr>
 							<td>Category</td>
-							<td> : <%= @product.category_id.blank? ? "-" : @product.category.name %></td>
+							<td> : <%= @product.category_id = 0 ? "-" : @product.category.name %></td>
 						</tr>
 						<tr>
 							<td>Varians</td>
@@ -56,10 +56,10 @@
 						</tr>
 					</table>
 						<%= link_to 'Edit', edit_product_path(@product), class: 'btn btn-sm btn-warning' %>
-            <% if @product.dijual? %>
-            	<%= link_to 'Tidak dijual', product_path(@product), method: :delete, data: {confirm: 'Are you sure you want to delete this data?'},class: 'btn btn-sm btn-danger' %>
+            <% if @product.on_sale? %>
+            	<%= link_to 'Tidak dijual', not_sold_path(@product),class: 'btn btn-sm btn-danger' %>
             <% else %>
-            	<%= link_to 'Dijual', product_path(@product), method: :delete, data: {confirm: 'Are you sure you want to delete this data?'},class: 'btn btn-sm btn-danger' %>
+            	<%= link_to 'Dijual', sale_path(@product),class: 'btn btn-sm btn-danger' %>
             <% end %>
 				</div>
 			</div>

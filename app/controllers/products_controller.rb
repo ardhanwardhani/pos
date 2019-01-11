@@ -49,6 +49,24 @@ class ProductsController < ApplicationController
 		end
 	end
 
+	def onsale
+		@product = Product.find(params[:id])
+		@product.sale
+		if @product.save
+			flash[:success] = "The product has been entered into the sales list"
+			redirect_to product_path(@product)
+		end
+	end
+
+	def notsold
+		@product = Product.find(params[:id])
+		@product.not_sale
+		if @product.save
+			flash[:info] = "The product has been removed from the sales list"
+			redirect_to product_path(@product)
+		end
+	end
+
 	private
 
 	def resource_params

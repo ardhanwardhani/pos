@@ -9,8 +9,12 @@ Rails.application.routes.draw do
   resources :bussinesses, only: [:edit, :update]
   resources :members
   resources :products
+  get 'products/:id/sale', to: 'products#onsale', as: 'sale'
+  get 'products/:id/notsold', to: 'products#notsold', as: 'not_sold'
   resources :categories
-  resources :instocks
+  resources :instocks do
+    resources :initems, only: [:new, :create, :destroy]
+  end
   resources :outstocks
   resources :suppliers
   resources :accounts, only: [:index]

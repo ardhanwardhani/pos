@@ -31,7 +31,7 @@
 	<%= render "layouts/navbar" %><br>
     <% flash.each do |key, value| %>
     <div class="alert alert-<%= key %> alert-dismissible fade show" role="alert">
-        <strong><%= value %></strong>
+        <%= value %>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
         </button>

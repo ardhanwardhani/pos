@@ -12,10 +12,13 @@
             <%= f.input :product_number %>
             <%= f.input :barcode %>
             <%= f.input :type_unit %>
-            <%= f.input :status, as: :select, collection: [['Dijual', '0'], ['Tidak dijual', '1']] %>
             <%= f.input :description %>
             <%= f.input :category_id do %>
-              <%= f.select :category_id, @categories.map { |c| [c.name, c.id, { class: c.id }] }, include_blank: 'Choose a Category', class: 'form-control' %>
+              <% if @categories.blank? %>
+                <%= link_to 'Create a Category', new_category_path, class: 'btn btn-primary btn-sm' %>
+              <% else %>
+                <%= f.select :category_id, @categories.map { |c| [c.name, c.id, { class: c.id }] }, include_blank: 'Choose a Category', class: 'form-control' %>
+              <% end %>
             <% end %>
             <!--
             <%#= f.select("category_id", options_from_collection_for_select(Category.all, "id", "name", params[:id].to_i)) %>

@@ -1,0 +1,127 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox ">
+        <div class="ibox-title">
+          <div class="ibox-tools">
+            <a class="collapse-link">
+              <i class="fa fa-chevron-up"></i>
+            </a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="fa fa-wrench"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-user">
+              <li><a href="#" class="dropdown-item">Config option 1</a></li>
+              <li><a href="#" class="dropdown-item">Config option 2</a></li>
+            </ul>
+            <a class="close-link">
+              <i class="fa fa-times"></i>
+            </a>
+          </div>
+          <h2>Item Income Stock</h2>
+        </div>
+        <div class="ibox-content">
+            <div class="table-responsive">
+              <table id="product" class="table table-striped table-bordered table-hover dataTables-example">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Amount</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                	<% @income_items.each do |i| %>
+                    <tr>
+                    	<% if i.itemable_type == "Product" %>
+                    	<td><%= i.itemable.name %></td>
+                    	<% elsif i.itemable_type == "Varian" %>
+                    	<td><%= i.itemable.product.name + " " + i.itemable.name %></td>
+                    	<% end %>
+                    	<td><%= i.amount %></td>
+                    	<td><%= i.unit_price %></td>
+                    	<td><%= i.total %></td>
+                    	<td><%= link_to "Delete", instock_initem_path(@instock.id, i), method: :delete, data: {confirm: "Are you sure?"}, class: 'btn btn-danger btn-sm' %></td>
+                    </tr>
+                  <% end %>
+                </tbody>
+                	<tfoot>
+                    <tr>
+                      <th>Name</th>
+                    	<th>Amount</th>
+                    	<th>Unit Price</th>
+                    	<th>Total</th>
+                    	<th>Action</th>
+                    </tr>
+                  </tfoot>
+                </table>
+                <%= link_to "Save", instock_path(@instock), data: {confirm: "Are you sure? After this, you cannot change this data"}, class: 'btn btn-primary btn-block' %>
+            </div>
+        </div>
+    </div>
+	</div>
+</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<%= simple_form_for(@initem, :url => instock_initems_path(@instock), method: :post) do |f| %>
+			<div class="formItem">
+				<%= f.label :itemable_type %>
+				<%= f.select(:itemable_type, options_for_select([["Product", "Product"], ["Varian", "Varian"], ["Choose a Type Item", 0]], 0)) %>
+				<%#= f.input :itemable_id do %>
+				<div class="product">
+					<%= f.input :itemable_id do %>
+	          <% if @products.blank? %>
+	            <%= link_to 'Create a Product', new_product_path, class: 'btn btn-primary btn-sm' %>
+	          <% else %>
+	            <%= f.select :itemable_id, @products.map { |p| [p.name, p.id, { class: p.id }] }, include_blank: 'Choose a Product', class: 'form-control' %>
+	          <% end %>
+	        <% end %>
+				</div>
+				<div class="varian">
+					<%= f.input :itemable_id do %>
+	          <% if @varians.blank? %>
+	            <%= link_to 'Create a Product with Varian', new_product_path, class: 'btn btn-primary btn-sm' %>
+	          <% else %>
+	            <%= f.select :itemable_id, @varians.map { |v| [v.product.name + " " + v.name, v.id, { class: v.id }] }, include_blank: 'Choose a Varian', class: 'form-control' %>
+	          <% end %>
+	        <% end %>
+				</div>
+				<%= f.input :amount %>
+				<%= f.input :unit_price %>
+				<%= f.input :total %>
+			</div>
+				<%= f.button :submit, class: 'btn btn-primary btn-block' %>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$(".varian").hide()
+		$(".product").hide()
+		
+		$('#income_item_itemable_type').change(function(){
+			data = $(this).val()
+			if (data == "Product"){
+				$(".product").show()
+				$(".varian").hide()
+			}
+			else if(data == "Varian"){
+				$(".varian").show()
+				$(".product").hide()
+			}
+		});
+
+		$("#income_item_unit_price").keyup(function(){
+			unit_price = $(this).val()
+			amount = $("#income_item_amount").val()
+			$("#income_item_total").val(amount * unit_price)
+
+		});
+
+	});
+</script>
