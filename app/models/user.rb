@@ -21,12 +21,13 @@ class User < ApplicationRecord
   validates :telephone, presence: true
   validates :province, presence: true
   validates :city, presence: true
+  validates :pin, length: { is: 4 }
 
-  after_create :bussiness
+  after_create :data
 
   private
 
-  def bussiness
+  def data
     bussiness = Bussiness.create(user_id: self.id, name: self.name, email: self.email, telephone: self.telephone, province: self.province, city: self.city)
     outlet = Outlet.create(user_id: self.id, name: 'Outlet 1', address: self.city, city: self.city, telephone: self.telephone)
   end

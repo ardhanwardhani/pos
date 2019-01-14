@@ -7,7 +7,6 @@
         </div>
         <div class="ibox-content">
           <%= simple_form_for(@outcome, url: outstocks_path, method: :post) do |f| %>
-            <%= f.input :id_outcome_stock %>
             <%= f.input :outlet_id do %>
               <%= f.select :outlet_id, Outlet.all.map { |o| [o.name, o.id, { class: o.id }] }, include_blank: 'Choose an Outlet', class: 'form-control' %>
             <% end %>

@@ -29,6 +29,7 @@
                                     <th>Name </th>
                                     <th>Category</th>
                                     <th>Price</th>
+                                    <th>Varian</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -36,8 +37,13 @@
                             <% @products.each do |p| %>
                                 <tr>
                                     <td><%= p.name %></td>
-                                    <td><%= p.category_id = 0 ? "Tidak berkategori" : p.category.name %></td>
+                                    <td><%= p.category_id.blank? ? "Tidak berkategori" : p.category.name %></td>
                                     <td><%= p.price %></td>
+                                    <% if p.group_varians.present? %>
+                                    <td><span class="badge badge-info">Varian</span></td>
+                                    <% else %>
+                                    <td><span class="badge badge-primary">No Varian</span></td>
+                                    <% end %>
                                     <td><%= link_to 'Detail', product_path(p), class: 'btn btn-sm btn-info' %></td>
                                 </tr>
                             <% end %>
@@ -47,6 +53,7 @@
                                     <th>Name </th>
                                     <th>Category</th>
                                     <th>Price</th>
+                                    <th>Varian</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

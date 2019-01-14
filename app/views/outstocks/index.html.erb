@@ -29,6 +29,7 @@
                   <th>ID Outcome Stock</th>
                   <th>Outlet</th>
                   <th>Date</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -37,6 +38,7 @@
                   <td><%= i.id_outcome_stock %></td>
                   <td><%= i.outlet.name %></td>
                   <td><%= i.date %></td>
+                  <td><%= link_to "Detail", outstock_path(i), class: 'btn btn-info btn-sm' %></td>
                 </tr>
                 <% end %>
               </tbody>
@@ -45,6 +47,7 @@
     		          <th>ID Outcome Stock</th>
         		      <th>Outlet</th>
             		  <th>Date</th>
+                  <th>Action</th>
             		</tr>
             	</tfoot>
             </table>

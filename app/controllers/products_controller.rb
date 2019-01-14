@@ -19,8 +19,14 @@ class ProductsController < ApplicationController
 		@product.fill_user_id(current_user)
 
 		if @product.save
-			flash[:success] = "Product successfully created"
-			redirect_to product_path(@product)
+			if @product.group_varians.present?
+				flash[:success] = "Product successfully created."
+				flash[:warning] = " Manage your varian product data"
+				redirect_to product_path(@product)
+			elsif @product.group_varians.blank?
+				flash[:success] = "Product successfully created"
+				redirect_to product_path(@product)
+			end
 		else
 			render 'new'
 		end
