@@ -1,38 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Point of Sales</title>
-    <%= csrf_meta_tags %>
-   
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- CSS Libs -->
-    <%= stylesheet_link_tag "style" %>
-
-    <!-- Custom CSS -->
-    <%= stylesheet_link_tag "custom" %>
-
-    <!-- Jquery + Custom JS -->
-    <%= javascript_include_tag "custom" %>
-</head>
-<body>
+<%= render 'template' %>
 <div class="container-fluid">
     <div class="row">
         <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
       <div>
-        <h3 class="logo-name">AW</h3>
+        <h3 class="logo-name">PoS</h3>
       </div>
       <div style="color: white;">
-      <h2>Welcome to AW PoS</h2>
-      <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-      <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
-      </p>   
+      <h2>Choose your outlet</h2>
       </div>
     </div>
   </div>
@@ -45,12 +20,10 @@
                     <center><h1><%= link_to o.name,operator_cashier_path(current_user, o) ,class: 'btn btn-primary btn-block'  %></h1></center>
                 </div>
                 <div class="ibox-content">
-                    <p>This the first your outlet</p>
+                    <p><%= o.address+","+o.city %></p>
                 </div>
             </div>
         </div>
         <% end %>
     </div>
 </div>
-</body>
-</html>

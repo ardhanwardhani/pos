@@ -1,0 +1,33 @@
+<%= render 'template' %>
+<div class="container-fluid">
+    <div class="row">
+        <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
+        <h3 class="logo-name">PoS</h3>
+      </div>
+      <div style="color: white;">
+      <h2>Input your PIN</h2>
+      </div>
+    </div>
+  </div>
+    </div>
+    <div class="row">
+        <div class="col-4 offset-md-4" style="padding-left: 3%; margin-top: 2%;">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <center><h1><%= @employee.name%></h1></center>
+                </div>
+                <div class="ibox-content">
+                    <p>Input your pin for login to <b><%= @outlet.name %></b> as a Cashier</p>
+                    <%= form_tag cek_pin_cashier_path, method: :post do %>
+                        <div class="form-group">
+                            <%= text_field_tag :pin, nil, class: 'form-control' %>
+                        </div>
+                        <%= submit_tag "Masuk", class: 'btn btn-primary btn-block' %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Point of Sales</title>
+    <%= csrf_meta_tags %>
+   
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- CSS Libs -->
+    <%= stylesheet_link_tag "style" %>
+
+    <!-- Custom CSS -->
+    <%= stylesheet_link_tag "custom" %>
+
+    <!-- Jquery + Custom JS -->
+    <%= javascript_include_tag "custom" %>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
+        <h3 class="logo-name">PoS</h3>
+      </div>
+      <div style="color: white;">
+      <h2>Input your PIN</h2>
+      </div>
+    </div>
+  </div>
+    </div>
+    <div class="row">
+        <div class="col-4 offset-md-4" style="padding-left: 3%; margin-top: 2%;">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <center><h1><%= current_user.name%></h1></center>
+                </div>
+                <div class="ibox-content">
+                    <p>Input your pin for login to <%= current_user.name %> as a Superadmin</p>
+                    <%= form_tag superadmin_cekpin_path, method: :get do %>
+                        <div class="form-group">
+                            <%= text_field_tag :pin, nil, class: 'form-control' %>
+                        </div>
+                        <%= submit_tag "Masuk", class: 'btn btn-primary btn-block' %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

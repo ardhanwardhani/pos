@@ -2,10 +2,15 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {:sessions => "sessions", :registrations => "registrations"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root "cashiers#index"
-  resources :cashiers, only: [:index]
-  get 'cashiers/:user_id/outlet', to: 'cashiers#outlet', as: 'outlet_cashier'
-  get 'cashiers/:user_id/outlet/:outlet_id/operator', to: 'cashiers#operator', as: 'operator_cashier'
-  get 'cashiers/:user_id/outlet/:outlet_id/operator/:operator_id/pin', to: 'cashiers#pin', as: 'pin_cashier'
+  get 'dashboard', to: 'cashiers#index', as: 'dashboard'
+  get 'dashboard/:user_id/outlet', to: 'cashiers#outlet', as: 'outlet_cashier'
+  get 'dashboard/:user_id/outlet/:outlet_id/operator', to: 'cashiers#operator', as: 'operator_cashier'
+  get 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/pin', to: 'cashiers#pin_cashier', as: 'pin_cashier'
+  post 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/cek', to: 'cashiers#cek_pin_cashier', as: 'cek_pin_cashier'
+  get 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/pinsuperadmin', to: 'cashiers#pin_superadmin_cashier', as: 'pin_superadmin_cashier'
+  post 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/ceksuperadmin', to: 'cashiers#cek_pin_superadmin_cashier', as: 'cek_pin_superadmin_cashier'
+  get 'dashboard/:id/pin', to: 'cashiers#pin_superadmin', as: 'pin_superadmin'
+  post 'dashboard/:id/cekpin', to: 'cashiers#cek_pin_superadmin', as: 'cek_pin_superadmin'
   resources :outlets
   resources :bussinesses, only: [:edit, :update]
   resources :members
@@ -25,4 +30,13 @@ Rails.application.routes.draw do
   end
   resources :suppliers
   resources :accounts, only: [:index]
+  # routes transaction for cashier from employee
+  get 'outlet/:outlet_id/operator/:operator_id/transaction', to: 'transactions#index', as: 'transactions'
+  get 'outlet/:outlet_id/operator/:operator_id/transaction/new', to: 'transactions#create', as: 'new_transaction'
+  get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/new', to: 'transaction_items#new', as: 'new_transaction_item'
+  post 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/create', to: 'transaction_items#create', as: 'transaction_item'
+  delete 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/transaction_item/:transitem_id', to: 'transaction_items#destroy', as: 'destroy_transaction_item'
+
+  # routes transaction for cashier from user/superadmin
+  get 'outlet/:outlet_id/admin/:admin_id/transaction', to: 'transactions#index', as: 'admin_transactions'
 end

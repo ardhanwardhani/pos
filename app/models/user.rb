@@ -23,6 +23,11 @@ class User < ApplicationRecord
   validates :city, presence: true
   validates :pin, length: { is: 4 }
 
+  def cek_pin(user, pin_cashier)
+    user.pin = pin_cashier.to_s
+  end
+
+
   after_create :data
 
   private

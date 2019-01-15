@@ -1,36 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Point of Sales</title>
-    <%= csrf_meta_tags %>
-   
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <!-- CSS Libs -->
-    <%= stylesheet_link_tag "style" %>
-
-    <!-- Custom CSS -->
-    <%= stylesheet_link_tag "custom" %>
-
-    <!-- Jquery + Custom JS -->
-    <%= javascript_include_tag "custom" %>
-</head>
-<body>
+<%= render 'template' %>
 <div class="container-fluid">
     <div class="row">
         <div class="middle-box text-center loginscreen animated fadeInDown">
     <div>
       <div>
-        <h3 class="logo-name">AW</h3>
+        <h3 class="logo-name">PoS</h3>
       </div>
       <div style="color: white;">
       <h2>Welcome to AW PoS</h2>
-      <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
+      <p>Manage your store and make transactions easily with our cash register system.
       <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
       </p>   
       </div>
@@ -38,6 +16,16 @@
   </div>
     </div>
     <div class="row">
+        <div class="col" style="padding-right: 3%;">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <center><h1><%= link_to "I'm Superadmin", pin_superadmin_path(current_user) ,class: 'btn btn-primary btn-block' %></h1></center>
+                </div>
+                <div class="ibox-content">
+                    <p>Monitor all your outlets easily with our application.</p>
+                </div>
+            </div>
+        </div>
         <div class="col" style="padding-right: 3%;">
             <div class="ibox">
                 <div class="ibox-title">
@@ -60,5 +48,3 @@
         </div>
     </div>
 </div>
-</body>
-</html>

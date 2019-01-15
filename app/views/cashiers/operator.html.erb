@@ -1,0 +1,39 @@
+<%= render 'template' %>
+<div class="container-fluid">
+    <div class="row">
+        <div class="middle-box text-center loginscreen animated fadeInDown">
+    <div>
+      <div>
+        <h3 class="logo-name">PoS</h3>
+      </div>
+      <div style="color: white;">
+      <h2>Choose Operator</h2>
+      </div>
+    </div>
+  </div>
+    </div>
+    <div class="row">
+        <div class="col-3" style="padding-left: 3%;">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <center><h1><%= link_to current_user.name, pin_superadmin_cashier_path(current_user, @outlet, current_user) ,class: 'btn btn-primary btn-block'  %></h1></center>
+                </div>
+                <div class="ibox-content">
+                    <p>Select this employee as an operator</p>
+                </div>
+            </div>
+        </div>
+        <% @employees.each do |e| %>
+        <div class="col-3" style="padding-left: 3%;">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <center><h1><%= link_to e.name, pin_cashier_path(current_user, @outlet, e) ,class: 'btn btn-primary btn-block'  %></h1></center>
+                </div>
+                <div class="ibox-content">
+                    <p>Select this employee as an operator</p>
+                </div>
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>
