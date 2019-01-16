@@ -11,7 +11,7 @@ class CashiersController < ApplicationController
 
 	def operator
 		#@user = User.find(params[:user_id])
-		@outlet = outlet.find(params[:outlet_id]) 
+		@outlet = Outlet.find(params[:outlet_id]) 
 		@employees = Outlet.find(params[:outlet_id]).employees
 	end
 
@@ -40,9 +40,11 @@ class CashiersController < ApplicationController
 
 	def cek_pin_superadmin_cashier
 		@employee = User.find(params[:operator_id])
+		@outlet = Outlet.find(params[:outlet_id])
 		@pin = params[:pin]
 		if @employee.cek_pin(@employee, @pin)
-			redirect_to transactions_path
+			flash[:success] = "Logged as cashier"
+			redirect_to admin_transactions_path(@outlet, @employee)
 		else
 			redirect_to pin_superadmin_cashier_path
 		end

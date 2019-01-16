@@ -36,7 +36,8 @@
                     <div class="dropdown profile-element">
                         <img alt="image" class="rounded-circle" src="img/profile_small.jpg"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold"></span>
+                                <span class="block m-t-xs font-bold"><%= current_user.name %></span>
+                                <span class="block m-t-xs font-bold"><%= @operator.name %></span>
                                 <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
                             </a>
                             

@@ -23,9 +23,9 @@
           <div class="action-product">
             <%= link_to 'Edit', edit_product_varian_path(@product, @varian), class: 'btn btn-sm btn-warning' %>
             <% if @varian.on_sale? %>
-              <%= link_to 'Tidak dijual', varian_not_sold_path(@product, @varian),class: 'btn btn-sm btn-danger' %>
+              <%= link_to 'Not Sold', varian_not_sold_path(@product, @varian),class: 'btn btn-sm btn-danger' %>
             <% else %>
-              <%= link_to 'Dijual', varian_sale_path(@product, @varian),class: 'btn btn-sm btn-danger' %>
+              <%= link_to 'Sale', varian_sale_path(@product, @varian),class: 'btn btn-sm btn-primary' %>
             <% end %>
           </div>
 					<table>
@@ -53,6 +53,14 @@
 							<td>Category</td>
 							<td> : <%= @product.category_id = 0 ? "-" : @product.category.name %></td>
 						</tr>
+						<tr>
+              <td>Status</td>
+              <% if @varian.on_sale? %>
+              <td>: <span class="badge badge-primary">On Sale</span></td>
+              <% else %>
+              <td>: <span class="badge badge-danger">Not Sold</span></td>
+              <% end %>
+            </tr>
 					</table>
 				</div>
 			</div>

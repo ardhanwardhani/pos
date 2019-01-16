@@ -14,6 +14,7 @@ class EmployeesController < ApplicationController
 
 	def create
 		@employee = Employee.new(resource_params)
+		@employee.fill_user_id(current_user)
 		if @employee.save
 			flash[:success] = "Employee successfully added"
 			redirect_to employees_path

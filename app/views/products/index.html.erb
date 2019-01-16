@@ -37,7 +37,11 @@
                             <% @products.each do |p| %>
                                 <tr>
                                     <td><%= p.name %></td>
-                                    <td><%= p.category_id = 0 ? "Tidak berkategori" : p.category.name %></td>
+                                    <% if p.category_id.blank? || p.category_id == 0 %>
+                                    <td>Without Category</td>
+                                    <% else %>
+                                    <td><%= p.category.name %></td>
+                                    <% end %>
                                     <td><%= p.price %></td>
                                     <% if p.group_varians.present? %>
                                     <td><span class="badge badge-info">Varian</span></td>

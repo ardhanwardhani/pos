@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'dashboard/:user_id/outlet/:outlet_id/operator', to: 'cashiers#operator', as: 'operator_cashier'
   get 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/pin', to: 'cashiers#pin_cashier', as: 'pin_cashier'
   post 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/cek', to: 'cashiers#cek_pin_cashier', as: 'cek_pin_cashier'
+
   get 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/pinsuperadmin', to: 'cashiers#pin_superadmin_cashier', as: 'pin_superadmin_cashier'
   post 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/ceksuperadmin', to: 'cashiers#cek_pin_superadmin_cashier', as: 'cek_pin_superadmin_cashier'
   get 'dashboard/:id/pin', to: 'cashiers#pin_superadmin', as: 'pin_superadmin'
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
     resources :outitems, only: [:new, :create, :destroy]
   end
   resources :suppliers
+  resources :employees
   resources :accounts, only: [:index]
   # routes transaction for cashier from employee
   get 'outlet/:outlet_id/operator/:operator_id/transaction', to: 'transactions#index', as: 'transactions'
@@ -36,7 +38,13 @@ Rails.application.routes.draw do
   get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/new', to: 'transaction_items#new', as: 'new_transaction_item'
   post 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/create', to: 'transaction_items#create', as: 'transaction_item'
   delete 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/transaction_item/:transitem_id', to: 'transaction_items#destroy', as: 'destroy_transaction_item'
+  get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/save', to: 'transactions#save_transaction', as: 'save_transaction'
 
   # routes transaction for cashier from user/superadmin
-  get 'outlet/:outlet_id/admin/:admin_id/transaction', to: 'transactions#index', as: 'admin_transactions'
+  get 'outlet/:outlet_id/admin/:operator_id/transaction', to: 'transactions#index_admin', as: 'admin_transactions'
+  get 'outlet/:outlet_id/admin/:operator_id/transaction/new', to: 'transactions#create_admin', as: 'admin_new_transaction'
+  get 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/new', to: 'transaction_items#new_admin', as: 'admin_new_transaction_item'
+  post 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/create', to: 'transaction_items#create_admin', as: 'admin_transaction_item'
+  delete 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/transaction_item/:transitem_id', to: 'transaction_items#destroy_admin', as: 'admin_destroy_transaction_item'
+  get 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/save', to: 'transactions#save_transaction_admin', as: 'admin_save_transaction'
 end

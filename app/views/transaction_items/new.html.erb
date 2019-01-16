@@ -1,9 +1,10 @@
 <%= render "transactions/navbar_cashier" %>
 <div class="container-fluid">
 	<div class="row">
-		<div class="col-lg-6">
+		<div class="col-lg-5">
 			<div class="row">
 				<% @products.each do |p| %>
+				<% if p.group_varians.blank? %>
 				<div class="col-lg-4" style="padding: 2%;">
 					<div class="image">
 						
@@ -20,6 +21,7 @@
 						</center>
 					</div>
 				</div>
+				<% end %>
 				<% end %>
 				<% @varians.each do |p| %>
 				<div class="col-lg-4" style="padding: 2%;">
@@ -41,7 +43,7 @@
 				<% end %>
 			</div>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-lg-7">
 			<div class="ibox ">
         <div class="ibox-title">
           <div class="ibox-tools">
@@ -99,16 +101,31 @@
 	                	<h3>Total</h3>
 	                </div>
 	                <div class="col-lg-3">
-	                	<h3>100.000</h3>	
+	                	<h3 style="text-align: right;"><%= @transaction.total %></h3>	
 	                </div>
                 </div>
-                <%= link_to "Save", transactions_path(@outlet, @operator, @transaction), data: {confirm: "Are you sure? After this, you cannot change this data"}, class: 'btn btn-primary btn-block' %>
+                <div class="row">
+                	<div class="col">
+                		<% if @operator.class.name == "User" %>
+                		<%= link_to "Save", admin_save_transaction_path(@outlet, @operator, @transaction), class: 'btn btn-warning btn-block' %>
+                		<% elsif @operator.class.name == "Employee" %>
+                		<%= link_to "Save", save_transaction_path(@outlet, @operator, @transaction), class: 'btn btn-warning btn-block' %>
+                		<% end %>
+                	</div>
+                	<div class="col">
+                		<% if @operator.class.name == "User" %>
+                		<%= link_to "Pay", admin_transactions_path(@outlet, @operator, @transaction), class: 'btn btn-primary btn-block' %>
+                		<% elsif @operator.class.name == "Employee" %>
+                		<%= link_to "Pay", transactions_path(@outlet, @operator, @transaction), class: 'btn btn-primary btn-block' %>
+                		<% end %>
+                	</div>
+                </div>
             </div>
         </div>
     </div>
 	<div class="row">
 		<div class="col-lg-12">
-			<%= simple_form_for(@transitem, :url => transaction_item_path(@outlet, @operator, @transaction), method: :post) do |f| %>
+			<%= simple_form_for(@transitem, :url => trasaction_operator_link(@outlet, @operator, @transaction), method: :post) do |f| %>
 			<div class="formItem">
 				<%= f.label :itemable_type %>
 				<%= f.select(:itemable_type, options_for_select([["Product", "Product"], ["Varian", "Varian"], ["Choose a Type Item", 0]], 0)) %>

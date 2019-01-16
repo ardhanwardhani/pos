@@ -1,7 +1,7 @@
 class VariansController < ApplicationController
 	def index
 		@product = Product.find(params[:product_id])
-		@varians = Varian.where(user_id: current_user).where(product_id: @product)
+		@varians = Varian.where("user_id = ? AND product_id = ?", current_user, @product)
 	end
 
 	def show
