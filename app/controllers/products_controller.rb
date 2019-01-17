@@ -1,6 +1,12 @@
 class ProductsController < ApplicationController
 	def index
 		@products = Product.where(user_id: current_user.id)
+		@products.each do |p|
+			if p.group_varians.present?
+				@minimum = p.varians.minimum("price")
+				@maximum = p.varians.maximum("price")
+			end
+		end
 	end
 
 	def show
@@ -17,7 +23,6 @@ class ProductsController < ApplicationController
 		@product = Product.new(resource_params)
 		@product.group_varians = JSON.parse(params[:product][:group_varians])
 		@product.fill_user_id(current_user)
-
 		if @product.save
 			if @product.group_varians.present?
 				flash[:success] = "Product successfully created."
@@ -76,6 +81,6 @@ class ProductsController < ApplicationController
 	private
 
 	def resource_params
-		params.require(:product).permit(:id, :name, :price, :product_number, :barcode, :type_unit, :status, :description, :category_id)
+		params.require(:product).permit(:id, :name, :price, :product_number, :barcode, :type_unit, :status, :description, :category_id, :image)
 	end
 end

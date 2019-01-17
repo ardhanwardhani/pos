@@ -11,10 +11,12 @@ class User < ApplicationRecord
   has_many :employees
   has_many :products
   has_many :varians
-  has_one :image, :as => :imageable
   has_many :income_stocks, :as => :authable
   has_many :outcome_stocks, :as => :authable
   has_many :purchase_orders, :as => :authable
+  has_many :transactions
+  has_many :transactions, :as => :operatorable
+
 
   validates :name, presence: true
   validates :email, presence: true

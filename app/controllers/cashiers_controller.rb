@@ -26,7 +26,7 @@ class CashiersController < ApplicationController
 		@pin = params[:pin]
 		if @employee.cek_pin(@employee, @pin)
 			flash[:success] = "You have logged in as a cashier, let's do as many transactions as possible!"
-			redirect_to transactions_path
+			redirect_to transactions_path(operator: "cashier")
 		else
 			redirect_to pin_cashier_path
 		end
@@ -44,7 +44,7 @@ class CashiersController < ApplicationController
 		@pin = params[:pin]
 		if @employee.cek_pin(@employee, @pin)
 			flash[:success] = "Logged as cashier"
-			redirect_to admin_transactions_path(@outlet, @employee)
+			redirect_to transactions_path(@outlet, @employee, operator: "superadmin")
 		else
 			redirect_to pin_superadmin_cashier_path
 		end

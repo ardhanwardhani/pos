@@ -42,10 +42,11 @@
                                     <% else %>
                                     <td><%= p.category.name %></td>
                                     <% end %>
-                                    <td><%= p.price %></td>
                                     <% if p.group_varians.present? %>
+                                    <td><%= @minimum.to_s + " - " + @maximum.to_s %></td>
                                     <td><span class="badge badge-info">Varian</span></td>
                                     <% else %>
+                                    <td><%= p.price %></td>
                                     <td><span class="badge badge-primary">No Varian</span></td>
                                     <% end %>
                                     <td><%= link_to 'Detail', product_path(p), class: 'btn btn-sm btn-info' %></td>

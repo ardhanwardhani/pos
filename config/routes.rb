@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {:sessions => "sessions", :registrations => "registrations"}
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  root "cashiers#index"
+
+  root "dashboards#index"
+  resources :dashboards, only: [:index]
   get 'dashboard', to: 'cashiers#index', as: 'dashboard'
   get 'dashboard/:user_id/outlet', to: 'cashiers#outlet', as: 'outlet_cashier'
   get 'dashboard/:user_id/outlet/:outlet_id/operator', to: 'cashiers#operator', as: 'operator_cashier'
@@ -29,22 +31,18 @@ Rails.application.routes.draw do
   resources :outstocks, only: [:index, :show, :new, :create] do
     resources :outitems, only: [:new, :create, :destroy]
   end
+  resources :cardstocks, only: [:index]
   resources :suppliers
   resources :employees
   resources :accounts, only: [:index]
-  # routes transaction for cashier from employee
   get 'outlet/:outlet_id/operator/:operator_id/transaction', to: 'transactions#index', as: 'transactions'
   get 'outlet/:outlet_id/operator/:operator_id/transaction/new', to: 'transactions#create', as: 'new_transaction'
   get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/new', to: 'transaction_items#new', as: 'new_transaction_item'
   post 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/create', to: 'transaction_items#create', as: 'transaction_item'
   delete 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/transaction_item/:transitem_id', to: 'transaction_items#destroy', as: 'destroy_transaction_item'
   get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/save', to: 'transactions#save_transaction', as: 'save_transaction'
-
-  # routes transaction for cashier from user/superadmin
-  get 'outlet/:outlet_id/admin/:operator_id/transaction', to: 'transactions#index_admin', as: 'admin_transactions'
-  get 'outlet/:outlet_id/admin/:operator_id/transaction/new', to: 'transactions#create_admin', as: 'admin_new_transaction'
-  get 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/new', to: 'transaction_items#new_admin', as: 'admin_new_transaction_item'
-  post 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/create', to: 'transaction_items#create_admin', as: 'admin_transaction_item'
-  delete 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/transaction_item/:transitem_id', to: 'transaction_items#destroy_admin', as: 'admin_destroy_transaction_item'
-  get 'outlet/:outlet_id/admin/:operator_id/transaction/:transaction_id/save', to: 'transactions#save_transaction_admin', as: 'admin_save_transaction'
+  get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/pay', to: 'transactions#pay_transaction', as: 'pay_transaction'
+  get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/payment', to: 'transactions#payment_transaction', as: 'payment_transaction'
+  get 'outlet/:outlet_id/operator/:operator_id/transaction/:transaction_id/detail', to: 'transactions#show', as: 'transaction'
+  get 'outlet/:outlet_id/operator/:operator_id/history', to: 'transactions#transaction_history', as: 'transaction_histories'
 end

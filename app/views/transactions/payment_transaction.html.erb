@@ -1,0 +1,89 @@
+<%= render 'navbar_cashier' %>
+<div class="row">
+	<div class="col-6 offset-3">
+		<div class="wrapper wrapper-content" id="invoice">
+			<div class="ibox-content">
+				<center><h2><strong><%= @bussiness.name %></strong></h2></center>
+ 					<table>
+ 						<tbody>
+ 							<tr>
+ 								<td>ID Invoice</td>
+ 								<td>: <%= @transaction.id_transaction %></td>
+ 							</tr>
+ 							<tr>
+ 								<td>Date Order</td>
+ 								<td>: <%= @transaction.created_at %></td>
+ 							</tr>
+ 							<tr>
+ 								<td>Outlet</td>
+ 								<td>: <%= @transaction.outlet.name %></td>
+ 							</tr>
+ 							<tr>
+ 								<td>Cashier</td>
+ 								<td>: <%= @transaction.operatorable.name %></td>
+ 							</tr>
+ 						</tbody>
+ 					</table>
+	          <table class="table invoice-table">
+	            <thead>
+	              <tr>
+	                <th>Item List</th>
+	                <th>Quantity</th>
+	                <th>Unit Price</th>
+	                <th>Total Price</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	            	<% @trans_items.each do |i| %>
+	                    <tr>
+	                    	<% if i.itemable_type == "Product" %>
+	                    	<td><%= i.itemable.name %></td>
+	                    	<% elsif i.itemable_type == "Varian" %>
+	                    	<td><%= i.itemable.product.name + " " + i.itemable.name %></td>
+	                    	<% end %>
+	                    	<td><%= i.amount_unit %></td>
+	                    	<td><%= i.itemable.price %></td>
+	                    	<td><%= i.amount_unit.to_i * i.itemable.price %></td>
+	                    </tr>
+	                  <% end %>
+	            </tbody>
+	          </table>
+	          <div class="row">	
+              <div class="col-8">
+              	<h3>Total</h3>
+              </div>
+              <div class="col-3 offset-1">
+               	<h3 style="text-align: right;"><%= @transaction.total %></h3>	
+              </div><br><br><br>
+            </div>
+              <div class="thanks">
+              	<center><strong>Thanks for order</strong></center>
+              </div>
+					</div>
+				</div>
+				<div class="text-right">
+          <button type="button" class="btn btn-primary" onclick="printDiv('invoice')"><i class="fa fa-dollar"></i> Make A Payment</button>
+        </div>
+			</div>
+		</div>
+	</div>
+<style type="text/css">
+@media print
+{
+body * { visibility: hidden; }
+.invoice * { visibility: visible; }
+.invoice { position: absolute; top: 40px; left: 30px; }
+}
+</style>
+<script>
+	function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+</script>

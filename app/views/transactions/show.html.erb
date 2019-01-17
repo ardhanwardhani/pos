@@ -1,0 +1,81 @@
+<%= render 'navbar_cashier' %>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-12">	
+			<div class="ibox">
+				<div class="ibox-title">
+					<div class="ibox-tools">
+              <a class="collapse-link">
+                  <i class="fa fa-chevron-up"></i>
+              </a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                  <i class="fa fa-wrench"></i>
+              </a>
+              <ul class="dropdown-menu dropdown-user">
+                  <li><a href="#" class="dropdown-item">Config option 1</a></li>
+                  <li><a href="#" class="dropdown-item">Config option 2</a></li>
+              </ul>
+              <a class="close-link">
+                  <i class="fa fa-times"></i>
+              </a>
+          </div>
+				</div>
+				<div class="ibox-content">
+					<table>
+						<tr>
+							<td>ID Transaction</td>
+							<td> :  <%= @transaction.id_transaction.blank? ? "-" : @transaction.id_transaction %></td>
+						</tr>
+						<tr>
+							<td>Customer Name</td>
+							<td> :  <%= @transaction.cus_name.blank? ? "No Name" : @transaction.cus_name %></td>
+						</tr>
+						<tr>
+							<td>Date Order</td>
+							<td> :  <%= @transaction.created_at %></td>
+						</tr>
+						<tr>
+							<td>Total</td>
+							<td> :  <%= @transaction.total %></td>
+						</tr>
+					</table>
+					<div class="table-responsive">
+            <table id="product" class="table table-striped table-bordered table-hover dataTables-example">
+              <thead>
+                <tr>
+                  <th>Product Name</th>
+                  <th>Price /unit</th>
+                  <th>Quantity </th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+              <% @trans_items.each do |i| %>
+                <tr>
+                	<% if i.itemable_type == "Varian" %>
+                  <td><%= i.itemable.product.name+" "+i.itemable.name %></td>
+                  <% else %>
+                  <td><%= i.itemable.name %></td>
+                  <% end %>
+                  <td><%= i.itemable.price %></td>
+                  <td><%= i.amount_unit %></td>
+                  <td><%= i.itemable.price * i.amount_unit.to_i %></td>\
+                </tr>
+              <% end %>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th>Product Number</th>
+                  <th>Price /unit</th>
+                  <th>Name </th>
+                  <th>Price</th>
+                </tr>
+              </tfoot>
+            </table>
+            <%= link_to "Pay this order", pay_transaction_path(@outlet, @operator, @transaction, operator: get_operator_type(@operator)), class: 'btn btn-primary btn-block' %>
+          </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

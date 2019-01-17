@@ -1,81 +1,71 @@
 class TransactionsController < ApplicationController
+	include ApplicationHelper
 	layout false
+	before_action :get_operator
 
 	def index
 		@outlet = Outlet.find(params[:outlet_id])
-		@operator = Employee.find(params[:operator_id])
 		@saved_trans = Transaction.where("user_id = ? AND status = ?", current_user, "save")
 	end
 
 	def show
+		@outlet = Outlet.find(params[:outlet_id])
+		@transaction = Transaction.find(params[:transaction_id])
+		@trans_items = TransactionItem.where(transaction_id: @transaction.id)
 	end
 
 	def create
 		@outlet = Outlet.find(params[:outlet_id])
-		@operator = Employee.find(params[:operator_id])
-		@transaction = Transaction.new(total: 0, user_id: current_user.id)
+		@last = Transaction.last
+		@transaction = Transaction.new
+		@transaction.fill_field_data(@outlet, @operator, current_user, @last)
 		if @transaction.save
-			redirect_to new_transaction_item_path(@outlet, @operator, @transaction)
+			redirect_to new_transaction_item_path(@outlet, @operator, @transaction, operator: get_operator_type(@operator))
+		else
+			puts @ttransaction.errors.full_messages
+			redirect_to new_transaction_path(@outlet, @operator, @transaction, operator: get_operator_type(@operator))
 		end
 	end
 
 	def save_transaction
 		@outlet = Outlet.find(params[:outlet_id])
-		@operator = Employee.find(params[:operator_id])
 		@transaction = Transaction.find(params[:transaction_id])
 		@transaction.save_trans
 		if @transaction.save
-			redirect_to transactions_path(@outlet, @operator)
+			redirect_to transactions_path(@outlet, @operator, operator: get_operator_type(@operator))
 		end
+	end
+
+	def payment_transaction
+		@bussiness = Bussiness.find_by(user_id: current_user.id)
+		@outlet = Outlet.find(params[:outlet_id])
+		@transaction = Transaction.find(params[:transaction_id])
+		@trans_items = TransactionItem.where(transaction_id: @transaction.id)
 	end
 
 	def pay_transaction
 		@outlet = Outlet.find(params[:outlet_id])
-		@operator = Employee.find(params[:operator_id])
 		@transaction = Transaction.find(params[:transaction_id])
 		@transaction.pay_trans
 		if @transaction.save
-			redirect_to transactions_path(@outlet, @operator)
+			redirect_to payment_transaction_path(@outlet, @operator, @transaction, operator: get_operator_type(@operator))
+		else
+			puts @transaction.errors.full_messages
 		end
 	end
 
-	# Superadmin as Cashier
-	def index_admin
+	def transaction_history
 		@outlet = Outlet.find(params[:outlet_id])
-		@operator = User.find(params[:operator_id])
-		@saved_trans = Transaction.where("user_id = ? AND status = ?", current_user, "save")
-		render :index
+		@transactions = Transaction.where("user_id = ? AND status = ?", current_user, "pay")
 	end
 
-	def show
-	end
+	private
 
-	def create_admin
-		@outlet = Outlet.find(params[:outlet_id])
-		@operator = User.find(params[:operator_id])
-		@transaction = Transaction.new(total: 0, user_id: current_user.id)
-		if @transaction.save
-			redirect_to admin_new_transaction_item_path(@outlet, @operator, @transaction)
-		end
-	end
-
-	def save_transaction_admin
-		@outlet = Outlet.find(params[:outlet_id])
-		@operator = User.find(params[:operator_id])
-		@transaction = Transaction.find(params[:transaction_id])
-		@transaction.save_trans
-		if @transaction.save
-			redirect_to admin_transactions_path(@outlet, @operator)
-		end
-	end
-
-	def pay_transaction_admin
-		@outlet = Outlet.find(params[:outlet_id])
-		@operator = User.find(params[:operator_id])
-		@transaction = Transaction.find(params[:transaction_id])
-		@transaction.pay_trans
-		if @transaction.save
-			redirect_to admin_transactions_path(@outlet, @operator)
+	def get_operator
+		if params[:operator] == "superadmin"
+			@operator = User.find(params[:operator_id])
+		elsif params[:operator] == "cashier"
+			@operator = Employee.find(params[:operator_id])
 		end
 	end
 end

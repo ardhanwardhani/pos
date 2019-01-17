@@ -60,10 +60,10 @@
                     </div>
                 </li>
                 <li class="mm-active">
-                    <i class="fa fa-th-large"></i><%= link_to "Transaction", transactions_path, class: 'nav-label' %>
+                    <i class="fa fa-th-large"></i><%= link_to "Transaction", transactions_path(operator: get_operator_type(@operator)), class: 'nav-label' %>
                 </li>
                 <li>
-                    <i class="fa fa-book"></i><%= link_to "Transaction History", transactions_path, class: 'nav-label' %>
+                    <i class="fa fa-book"></i><%= link_to "Transaction History", transaction_histories_path(operator: get_operator_type(@operator)), class: 'nav-label' %>
                 </li>
                 <li>
                     <a href="#"><i class="fa fa-th-large"></i> <span class="nav-label">Account</span> <span class="fa arrow"></span></a>

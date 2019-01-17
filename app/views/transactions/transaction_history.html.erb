@@ -1,0 +1,61 @@
+<%= render "navbar_cashier" %>
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-12">
+			<div class="ibox-content">
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover dataTables-example">
+            <thead>
+              <tr>
+                <th>ID Transaction</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @transactions.each do |t| %>
+              <tr>
+                <td><%= t.id_transaction %></td>
+                <td><%= t.total %></td>
+                <td><span class="badge  badge-primary">Pay</span></td>
+                <td><%= link_to "Detail", transaction_path(@outlet, @operator, t, operator: get_operator_type(@operator)), class: 'btn btn-info btn-sm' %></td>
+              </tr>
+              <% end %>
+            </tbody>
+            <tfoot>
+            	<tr>
+   		          <th>ID Transaction</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Action</th>
+           		</tr>
+           	</tfoot>
+          </table>
+        </div>
+      </div>
+		</div>
+	</div>
+</div>
+<script>
+$(document).ready(function(){
+  $('.dataTables-example').DataTable({
+    pageLength: 25,
+    responsive: true,
+    dom: '<"html5buttons"B>lTfgitp',
+    buttons: [
+	    { extend: 'copy'},
+      {extend: 'csv'},
+      {extend: 'excel', title: 'ExampleFile'},
+      {extend: 'pdf', title: 'ExampleFile'},
+      {extend: 'print',
+        customize: function (win){
+        $(win.document.body).addClass('white-bg');
+        $(win.document.body).css('font-size', '10px');
+        $(win.document.body).find('table').addClass('compact').css('font-size', 'inherit');
+        }
+      }
+    ]
+  });
+});
+</script>

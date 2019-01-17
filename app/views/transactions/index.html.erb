@@ -37,10 +37,10 @@
                   <tbody>
                   <% @saved_trans.each do |s| %>
                     <tr>
-                      <td></td>
+                      <td><%= s.id_transaction %></td>
                       <td><%= s.total %></td>
                       <td><span class="badge badge-warning">Saved Transaction</span></td>
-                      <td></td>
+                      <td><%= link_to "Detail", transaction_path(@outlet, @operator, s, operator: get_operator_type(@operator)), class: 'btn btn-info btn-sm' %></td>
                     </tr>
                   <% end %>
                   </tbody>
@@ -62,16 +62,12 @@
     <div class="col-4">
       <div class="row">
         <div class="col">
-          <%= form_tag root_path, method: :post do %>
+         <!--  <%#= form_tag root_path, method: :post do %>
           <div class="form-group">
-            <%= text_field_tag :cus_name, nil ,class: 'form-control' %>
+            <%#= text_field_tag :cus_name, nil ,class: 'form-control' %>
           </div>
-          <% end %>
-          <% if @operator.class.name == "User" %>
-          <%= link_to "Create new Transaction", admin_new_transaction_path(@outlet, @operator), class: 'btn btn-primary btn-block' %>
-          <% elsif @operator.class.name == "Employee" %>
-          <%= link_to "Create new Transaction", new_transaction_path(@outlet, @operator), class: 'btn btn-primary btn-block' %>
-          <% end %>
+          <%# end %> -->
+          <%= link_to "Create new Transaction", new_transaction_path(@outlet, @operator, operator: get_operator_type(@operator)), class: 'btn btn-primary btn-block' %>
         </div>
       </div>
     </div>

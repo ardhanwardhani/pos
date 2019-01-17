@@ -106,18 +106,10 @@
                 </div>
                 <div class="row">
                 	<div class="col">
-                		<% if @operator.class.name == "User" %>
-                		<%= link_to "Save", admin_save_transaction_path(@outlet, @operator, @transaction), class: 'btn btn-warning btn-block' %>
-                		<% elsif @operator.class.name == "Employee" %>
-                		<%= link_to "Save", save_transaction_path(@outlet, @operator, @transaction), class: 'btn btn-warning btn-block' %>
-                		<% end %>
+                		<%= link_to "Save", save_transaction_path(@outlet, @operator, @transaction, operator: get_operator_type(@operator)), class: 'btn btn-warning btn-block' %>
                 	</div>
                 	<div class="col">
-                		<% if @operator.class.name == "User" %>
-                		<%= link_to "Pay", admin_transactions_path(@outlet, @operator, @transaction), class: 'btn btn-primary btn-block' %>
-                		<% elsif @operator.class.name == "Employee" %>
-                		<%= link_to "Pay", transactions_path(@outlet, @operator, @transaction), class: 'btn btn-primary btn-block' %>
-                		<% end %>
+                		<%= link_to "Pay", pay_transaction_path(@outlet, @operator, @transaction, operator: get_operator_type(@operator)), class: 'btn btn-primary btn-block' %>
                 	</div>
                 </div>
             </div>
@@ -125,7 +117,7 @@
     </div>
 	<div class="row">
 		<div class="col-lg-12">
-			<%= simple_form_for(@transitem, :url => trasaction_operator_link(@outlet, @operator, @transaction), method: :post) do |f| %>
+			<%= simple_form_for(@transitem, :url => transaction_item_path(@outlet, @operator, @transaction, operator: get_operator_type(@operator)), method: :post) do |f| %>
 			<div class="formItem">
 				<%= f.label :itemable_type %>
 				<%= f.select(:itemable_type, options_for_select([["Product", "Product"], ["Varian", "Varian"], ["Choose a Type Item", 0]], 0)) %>

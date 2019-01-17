@@ -1,10 +1,10 @@
 module ApplicationHelper
 
-	def trasaction_operator_link(outlet, operator, transaction)
+	def get_operator_type(operator)
 		if operator.class.name == "User"
-			return admin_transaction_item_path(outlet, operator, transaction)
+			return "superadmin"
 		elsif operator.class.name == "Employee"
-			return transaction_item_path(outlet, operator, transaction)
+			return "cashier"
 		end
 	end
 end

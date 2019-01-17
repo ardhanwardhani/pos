@@ -4,6 +4,7 @@ class Employee < ApplicationRecord
 	has_many :outlets, :through => :permit
 	has_one :user_staff
 	has_many :transactions
+  has_many :transactions, :as => :operatorable
 
 	def cek_pin(employee, pin)
 		employee.pin = pin
