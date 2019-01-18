@@ -1,10 +1,10 @@
 class BussinessesController < ApplicationController
 	def edit
-		@bussiness = Bussiness.find(current_user.id)
+		@bussiness = Bussiness.find(current_user)
 	end
 
 	def update
-		@bussiness = Bussiness.find(current_user.id)
+		@bussiness = Bussiness.find(current_user)
 		if @bussiness.update(resource_params)
 			flash[:success] = "Your bussiness information has change"
 			redirect_to accounts_path

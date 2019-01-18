@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users, :controllers => {:sessions => "sessions", :registrations => "registrations"}
+  devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  root "dashboards#index"
+  root "cashiers#index"
   resources :dashboards, only: [:index]
   get 'dashboard', to: 'cashiers#index', as: 'dashboard'
   get 'dashboard/:user_id/outlet', to: 'cashiers#outlet', as: 'outlet_cashier'

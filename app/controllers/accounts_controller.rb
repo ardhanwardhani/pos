@@ -1,6 +1,6 @@
 class AccountsController < ApplicationController
 	def index
-		@bussiness = Bussiness.find_by(user_id: current_user.id)
+		@bussiness = Bussiness.where(user_id: current_user).first
 	end
 
 	def pin

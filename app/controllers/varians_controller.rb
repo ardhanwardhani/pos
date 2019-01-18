@@ -17,7 +17,7 @@ class VariansController < ApplicationController
 	def update
 		@varian = Varian.find(params[:id])
 		if @varian.update(resource_params)
-			redirect_to 
+			redirect_to product_varian_path(@varian)
 		else
 		end
 	end

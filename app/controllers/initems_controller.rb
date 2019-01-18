@@ -3,8 +3,8 @@ class InitemsController < ApplicationController
 		@initem = IncomeItem.new
 		@instock = IncomeStock.find(params[:instock_id])
 		@income_items = IncomeItem.where(income_stock_id: (params[:instock_id]))
-		@products = Product.where(user_id: current_user.id)
-		@varians = Varian.where(user_id: current_user.id)
+		@products = Product.where(user_id: current_user)
+		@varians = Varian.where(user_id: current_user)
 	end
 
 	def create

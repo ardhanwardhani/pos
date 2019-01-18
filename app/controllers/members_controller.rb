@@ -1,12 +1,12 @@
 class MembersController < ApplicationController
 
 	def index
-		@members = Member.where(user_id: current_user.id)
+		@members = Member.where(user_id: current_user)
 	end
 
 	def show
 		@member = Member.find(params[:id])
-		@transaction = Transaction.where(member_id: @member.id)
+		@transaction = Transaction.where(member_id: @member)
 	end
 
 	def new
@@ -15,7 +15,7 @@ class MembersController < ApplicationController
 
 	def create
 		@member = Member.new(resource_params)
-		@member.fill_user_id(current_user)
+		@member.user = current_user
 		if @member.save
 			flash[:success] = "Member successfully created"
 			redirect_to members_path

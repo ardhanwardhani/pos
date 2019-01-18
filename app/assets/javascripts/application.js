@@ -18,5 +18,5 @@
 //= require jquery.metisMenu
 //= require datatables.min
 //= require inspinia
-//= require nested_form_fields
+//= require jquery_nested_form
 // require_tree .

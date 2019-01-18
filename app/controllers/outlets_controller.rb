@@ -1,7 +1,7 @@
 class OutletsController < ApplicationController
 
 	def index
-		@outlets = Outlet.where(user_id: current_user.id)
+		@outlets = Outlet.where(user_id: current_user)
 	end
 
 	def show
@@ -14,7 +14,7 @@ class OutletsController < ApplicationController
 
 	def create
 		@outlet = Outlet.new(resource_params)
-		@outlet.fill_user_id(current_user)
+		@outlet.user = current_user
 		if @outlet.save
 			flash[:success] = "New outlet successfully created"
 			redirect_to outlets_path

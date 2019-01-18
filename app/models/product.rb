@@ -29,11 +29,6 @@ class Product < ApplicationRecord
 		end
 	end
 
-
-	def fill_user_id(current_user)
-		self.user_id = current_user.id
-	end
-
 	def product_hash
 		hsh = self.group_varians
 		if hsh.present?
@@ -47,9 +42,5 @@ class Product < ApplicationRecord
 	  		@varian = Varian.create(product_id: self.id, name: name_varian, user_id: self.user_id)
   		end
   	end
-	end
-
-	def dijual?
-		self.status == "Dijual"
 	end
 end

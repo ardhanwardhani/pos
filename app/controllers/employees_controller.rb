@@ -1,7 +1,7 @@
 class EmployeesController < ApplicationController
 
 	def index
-		@employees = Employee.where(user_id: current_user.id)
+		@employees = Employee.where(user_id: current_user)
 	end
 
 	def show
@@ -10,15 +10,16 @@ class EmployeesController < ApplicationController
 
 	def new
 		@employee = Employee.new
+		@employee.permits.build.build_outlet
 	end
 
 	def create
-		@employee = Employee.new(resource_params)
-		@employee.fill_user_id(current_user)
+		@employee = current_user.employees.build(resource_params)
 		if @employee.save
 			flash[:success] = "Employee successfully added"
 			redirect_to employees_path
 		else
+			puts @employee.errors.full_messages
 			render 'new'
 		end
 	end
@@ -48,6 +49,6 @@ class EmployeesController < ApplicationController
 	private
 
 	def resource_params
-		params.require(:employee).permit(:id, :name, :email, :pin, :type_employee)
+		params.require(:employee).permit(:id, :name, :email, :pin, :type_employee, :permits_attributes => [:permitable_type, :permitable_id, :outlet_id, :_destroy])
 	end
 end

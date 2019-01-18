@@ -11,12 +11,12 @@ class TransactionsController < ApplicationController
 	def show
 		@outlet = Outlet.find(params[:outlet_id])
 		@transaction = Transaction.find(params[:transaction_id])
-		@trans_items = TransactionItem.where(transaction_id: @transaction.id)
+		@trans_items = TransactionItem.where(transaction_id: @transaction)
 	end
 
 	def create
 		@outlet = Outlet.find(params[:outlet_id])
-		@last = Transaction.last
+		@last = Transaction.where(user_id: current_user).last
 		@transaction = Transaction.new
 		@transaction.fill_field_data(@outlet, @operator, current_user, @last)
 		if @transaction.save
@@ -37,10 +37,10 @@ class TransactionsController < ApplicationController
 	end
 
 	def payment_transaction
-		@bussiness = Bussiness.find_by(user_id: current_user.id)
+		@bussiness = Bussiness.where(user_id: current_user).first
 		@outlet = Outlet.find(params[:outlet_id])
 		@transaction = Transaction.find(params[:transaction_id])
-		@trans_items = TransactionItem.where(transaction_id: @transaction.id)
+		@trans_items = TransactionItem.where(transaction_id: @transaction)
 	end
 
 	def pay_transaction

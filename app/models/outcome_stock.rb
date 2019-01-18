@@ -4,13 +4,7 @@ class OutcomeStock < ApplicationRecord
 	belongs_to :outlet
 	belongs_to :authable, :polymorphic => true
 
-	def fill_authable(current_user)
-		self.authable_type = current_user.class.name
-		self.authable_id = current_user.id
-		self.user_id = current_user.id
-	end
-	
-	def fill_id_outcome_stock(last)
+	def fill_outcome_stock(last)
     if last.nil?
       self.id_outcome_stock = "OS-1"
     else

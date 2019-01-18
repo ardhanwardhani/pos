@@ -8,9 +8,4 @@ class Outlet < ApplicationRecord
 	#has_many :user_staffs, :through => :permits PERMITABLE
 
 	belongs_to :user
-
-
-	def fill_user_id(current_user)
-		self.user_id = current_user.id
-	end
 end

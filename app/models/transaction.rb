@@ -24,9 +24,9 @@ class Transaction < ApplicationRecord
 	def fill_field_data(outlet, operator, current_user, last)
 		self.total = 0
 		self.user_id = current_user.id
-		self.outlet_id = outlet.id
-		self.operatorable_type = operator.class.name
-		self.operatorable_id = operator.id
+		self.outlet = outlet
+		self.operatorable = operator
+
 		if last.nil?
       self.id_transaction = "TRX-1"
     else

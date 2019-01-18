@@ -1,6 +1,6 @@
 class InstocksController < ApplicationController
 	def index
-		@incomes = IncomeStock.where(user_id: current_user.id)
+		@incomes = IncomeStock.where(user_id: current_user)
 	end
 
 	def show
@@ -10,17 +10,19 @@ class InstocksController < ApplicationController
 
 	def new
 		@income = IncomeStock.new
+		@outlets = Outlet.where(user_id: current_user.id)
 	end
 
 	def create
-		@income = IncomeStock.new(resource_params)
+		@income = current_user.income_stocks.build(resource_params)
 		@last = IncomeStock.last
-		@income.fill_authable(current_user)
-		@income.fill_id_income_stock(@last)
+		@income.user_id = current_user
+		@income.fill_income_stock(@last)
 		if @income.save
 			flash[:success] = "Income Stock successfully created. Add item product for current income stock."
 			redirect_to new_instock_initem_path(@income)
 		else
+			puts @income.errors.full_messages
 			render 'new'
 		end
 	end

@@ -1,7 +1,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-lg-12">
-			<%= simple_form_for @employee do |f| %>
+			<%= simple_nested_form_for @employee do |f| %>
 				<%= f.input :name %>
 				<%= f.input :pin %>
 				<div class="form-staff">
@@ -11,6 +11,17 @@
 					<input class="form-control string optional" type="hidden" value="Cashier" name="employee[type_employee]" id="employee_type_employee"/>
 				</div>
 				<input id="staff" type="checkbox" name="staff"> Staff
+				<div class="outlet">
+					<%= f.fields_for :permits do |p| %>
+						<%= p.input :permitable_type, as: :hidden %>
+						<%= p.input :permitable_id, as: :hidden  %>
+						<%= p.select :outlet_id, Outlet.all.map { |v| [v.name, v.id, { class: v.id }] }, {include_blank: 'Choose an outlet'}, class: 'outlets-list' %>
+						<%= p.link_to_remove "Remove this Outlet" %>
+					<% end %>
+				</div>
+
+					<%= f.link_to_add "Add an Outlet", :permits, :data => { :target => ".outlet"} %>
+
 				<%= f.button :submit, class: "btn btn-primary btn-block" %>
 			<% end %>
 		</div>

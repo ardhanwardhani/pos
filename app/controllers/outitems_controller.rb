@@ -3,14 +3,14 @@ class OutitemsController < ApplicationController
 		@outitem = OutcomeItem.new
 		@outstock = OutcomeStock.find(params[:outstock_id])
 		@outcome_items = OutcomeItem.where(outcome_stock_id: (params[:outstock_id]))
-		@products = Product.where(user_id: current_user.id)
-		@varians = Varian.where(user_id: current_user.id)
+		@products = Product.where(user_id: current_user)
+		@varians = Varian.where(user_id: current_user)
 	end
 
 	def create
 		@outitem = OutcomeItem.new(resource_params)
 		@outstock = OutcomeStock.find(params[:outstock_id])
-		@outitem.outcome_stock_id = @outstock.id
+		@outitem.outcome_stock = @outstock
 		if @outitem.save
 			redirect_to new_outstock_outitem_path(@outstock)
 		else

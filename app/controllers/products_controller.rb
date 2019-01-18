@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
 	def index
-		@products = Product.where(user_id: current_user.id)
+		@products = Product.where(user_id: current_user)
 		@products.each do |p|
 			if p.group_varians.present?
 				@minimum = p.varians.minimum("price")
@@ -11,24 +11,24 @@ class ProductsController < ApplicationController
 
 	def show
 		@product = Product.find(params[:id])
-		@varians = Varian.where(product_id: @product.id)
+		@varians = Varian.where(product_id: @product)
 	end
 
 	def new
 		@product = Product.new
-		@categories = Category.all
+		@categories = Category.where(user_id: current_user)
 	end
 
 	def create
 		@product = Product.new(resource_params)
 		@product.group_varians = JSON.parse(params[:product][:group_varians])
-		@product.fill_user_id(current_user)
+		@product.user_id = current_user
 		if @product.save
 			if @product.group_varians.present?
 				flash[:success] = "Product successfully created."
 				flash[:warning] = " Manage your varian product data"
 				redirect_to product_path(@product)
-			elsif @product.group_varians.blank?
+			else
 				flash[:success] = "Product successfully created"
 				redirect_to product_path(@product)
 			end
@@ -39,7 +39,7 @@ class ProductsController < ApplicationController
 
 	def edit
 		@product = Product.find(params[:id])
-		@categories = Category.all
+		@categories = Category.where(user_id: current_user)
 	end
 
 	def update

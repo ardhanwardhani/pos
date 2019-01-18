@@ -1,6 +1,6 @@
 class SuppliersController < ApplicationController
 	def index
-		@suppliers = Supplier.where(user_id: current_user.id)
+		@suppliers = Supplier.where(user_id: current_user)
 	end
 
 	def show
@@ -13,7 +13,7 @@ class SuppliersController < ApplicationController
 
 	def create
 		@supplier = Supplier.new(resource_params)
-		@supplier.fill_user_id(current_user)
+		@supplieruser = current_user
 		if @supplier.save
 			flash[:success] = "Supplier successfully created"
 			redirect_to suppliers_path
