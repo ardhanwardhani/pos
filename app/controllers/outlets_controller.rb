@@ -1,11 +1,12 @@
 class OutletsController < ApplicationController
+	before_action :set_data, only: [:show, :edit, :update, :destroy]
 
 	def index
 		@outlets = Outlet.where(user_id: current_user)
 	end
 
 	def show
-		@outlet = Outlet.find(params[:id])
+		
 	end
 
 	def new
@@ -24,11 +25,10 @@ class OutletsController < ApplicationController
 	end
 
 	def edit
-		@outlet = Outlet.find(params[:id])
+		
 	end
 
 	def update
-		@outlet = Outlet.find(params[:id])
 		if @outlet.update(resource_params)
 			flash[:success] = "Outlet has been changed"
 			redirect_to outlets_path
@@ -38,7 +38,6 @@ class OutletsController < ApplicationController
 	end
 
 	def destroy
-		@outlet = Outlet.find(params[:id])
 		if @outlet.delete
 			flash[:info] = "Outlet has been deleted"
 			redirect_to outlets_path
@@ -46,6 +45,10 @@ class OutletsController < ApplicationController
 	end
 
 	private
+
+	def set_data
+		@outlet = Outlet.find(params[:id])
+	end
 
 	def resource_params
 		params.require(:outlet).permit(:id, :name, :address, :city, :telephone)

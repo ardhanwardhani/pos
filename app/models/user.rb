@@ -26,16 +26,25 @@ class User < ApplicationRecord
   validates :pin, length: { is: 4 }
 
   def cek_pin(pin_cashier)
-    self.pin == pin_cashier.to_s
+    self.pin == pin_cashier.to_i
   end
 
+  def generate_access_token
+    token = SecureRandom.hex(10)
+    self.update(access_token: token, access_token_created_at: Time.zone.now)
+    token
+  end
+
+  def invalidate_access_token
+    self.update(access_token: nil, access_token_created_at: nil)
+  end
 
   after_create :data
 
   private
 
   def data
-    bussiness = Bussiness.create(user_id: self.id, name: self.name, email: self.email, telephone: self.telephone, province: self.province, city: self.city)
+    bussiness = Bussiness.create(user_id: self.id, name: self.name, telephone: self.telephone, province: self.province, city: self.city)
     outlet = Outlet.create(user_id: self.id, name: 'Outlet 1', address: self.city, city: self.city, telephone: self.telephone)
   end
 end

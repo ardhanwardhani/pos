@@ -1,6 +1,15 @@
 Rails.application.routes.draw do
-  devise_for :users
+   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      root "api/v1/products#index"
+      devise_for :users, controller: { sessions: 'api/v1/sessions' }
+
+      resources :outlets, except: [:new, :edit]
+      resources :products, except: [:new, :edit]
+    end
+  end
 
   root "cashiers#index"
   resources :dashboards, only: [:index]
@@ -14,11 +23,10 @@ Rails.application.routes.draw do
   post 'dashboard/:user_id/outlet/:outlet_id/operator/:operator_id/ceksuperadmin', to: 'cashiers#cek_pin_superadmin_cashier', as: 'cek_pin_superadmin_cashier'
   get 'dashboard/:id/pin', to: 'cashiers#pin_superadmin', as: 'pin_superadmin'
   post 'dashboard/:id/cekpin', to: 'cashiers#cek_pin_superadmin', as: 'cek_pin_superadmin'
-  resources :outlets
+  resources :outlets, :members
   resources :bussinesses, only: [:edit, :update]
-  resources :members
   resources :products do
-    resources :varians, only: [:index, :show, :edit, :update]
+    resources :varians, except: [:new, :create]
   end
   get 'products/:id/sale', to: 'products#onsale', as: 'sale'
   get 'products/:id/notsold', to: 'products#notsold', as: 'not_sold'
@@ -28,12 +36,11 @@ Rails.application.routes.draw do
   resources :instocks, only: [:index, :show, :new, :create] do
     resources :initems, only: [:new, :create, :destroy]
   end
-  resources :outstocks, only: [:index, :show, :new, :create] do
+  resources :outstocks, except: [:edit, :update, :delete] do
     resources :outitems, only: [:new, :create, :destroy]
   end
   resources :cardstocks, only: [:index]
-  resources :suppliers
-  resources :employees
+  resources :suppliers, :employees
   resources :accounts, only: [:index]
   get 'outlet/:outlet_id/operator/:operator_id/transaction', to: 'transactions#index', as: 'transactions'
   get 'outlet/:outlet_id/operator/:operator_id/transaction/new', to: 'transactions#create', as: 'new_transaction'

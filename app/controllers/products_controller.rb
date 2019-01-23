@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
 	def index
+		#debugger
 		@products = Product.where(user_id: current_user)
 		@products.each do |p|
 			if p.group_varians.present?
@@ -22,7 +23,7 @@ class ProductsController < ApplicationController
 	def create
 		@product = Product.new(resource_params)
 		@product.group_varians = JSON.parse(params[:product][:group_varians])
-		@product.user_id = current_user
+		@product.user_id = current_user.id
 		if @product.save
 			if @product.group_varians.present?
 				flash[:success] = "Product successfully created."

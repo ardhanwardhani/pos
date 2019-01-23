@@ -1,10 +1,9 @@
 class BussinessesController < ApplicationController
+	before_action :set_data, only: [:edit, :update]
 	def edit
-		@bussiness = Bussiness.find(current_user)
 	end
 
 	def update
-		@bussiness = Bussiness.find(current_user)
 		if @bussiness.update(resource_params)
 			flash[:success] = "Your bussiness information has change"
 			redirect_to accounts_path
@@ -14,6 +13,10 @@ class BussinessesController < ApplicationController
 	end
 
 	private
+
+	def set_data
+		@bussiness = Bussiness.find(current_user)
+	end
 
 	def resource_params
 		params.require(:bussiness).permit(:id, :name, :email, :province, :city, :telephone)

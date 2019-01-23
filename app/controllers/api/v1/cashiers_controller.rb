@@ -10,10 +10,14 @@ class CashiersController < ApplicationController
 
 	def outlet
 		@outlets = Outlet.where(user_id: current_user)
+
+		render json: @outlets
 	end
 
 	def operator
 		@employees = @outlet.permits.where(permitable_type: "Employee")
+
+		render json: @employees
 	end
 
 	def pin_cashier
@@ -41,18 +45,6 @@ class CashiersController < ApplicationController
 			redirect_to pin_superadmin_cashier_path
 		end
 	end
-
-	def pin_superadmin
-	end
-
-	def cek_pin_superadmin
-		@employee = User.find(params[:id])
-		@pin = params[:pin]
-		if @employee.cek_pin(@pin)
-			flash[:success] = "Logged in as Superadmin to Backoffice"
-			redirect_to products_path
-		end
-	end
 	
 	private
 
@@ -61,7 +53,7 @@ class CashiersController < ApplicationController
 	end
 
 	def set_user
-		@employee = User.find(params[:user_id])
+		@employee = User.find(params[:operator_id])
 	end
 
 	def set_employee
